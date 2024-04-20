@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hero</title>
+</head>
+<body>
+<br>
+<p th:text="${'Username = ' + user.getUsername()}">VALUE</p>
+<p th:text="${'Password hidden'}">VALUE</p>
+<p th:text="${'email = ' + user.getEmail()}">VALUE</p>
+
+<br>
+<div>
+    <a href="/logout"><h3>Logout</h3></a><br>
+</div>
+<br>
+<div>
+    <a href="/users"><h3>Start Page</h3></a><br>
+</div>
+
+</body>
+</html>
