@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     // Сохранить пользователя
     @Transactional
     @Override
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
     // Удалить пользователя по ID
     @Transactional
     @Override
@@ -43,26 +45,35 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             userRepository.deleteById(id);
         }
     }
+
     // Получить список всех пользователей из БД
     @Transactional
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
     // Редактирование пользователя
     @Transactional
     @Override
-    public void editUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void editUser(Long id, User user) {
+        User existingUser = userRepository.findById(id).get();
+        if (user.getPassword().isEmpty()) {
+            user.setPassword(existingUser.getPassword());
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userRepository.save(user);
 
     }
+
     // Получение пользователя по ID
     @Transactional
     @Override
     public User getUser(long id) {
         return userRepository.findById(id).get();
     }
+
     // Получение пользователя по имени
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -77,12 +88,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
         return user.get();
     }
-
-
-
-
-
-
 
 
 }

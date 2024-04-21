@@ -15,11 +15,13 @@ import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 public class AdminController {
     private UserService userService;
     private RoleService roleService;
+
     @Autowired
     public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
+
     // Показать всех пользователей Из БД
     @GetMapping
     public String showAllUsers(Model model) {
@@ -27,23 +29,27 @@ public class AdminController {
         model.addAttribute("roles", roleService.findAll());
         return "adminPage";
     }
+
     @GetMapping(value = "/{id}/editUser")
     public String editUser(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
         model.addAttribute("roles", roleService.findAll());
         return "editUser";
     }
+
     @PatchMapping(value = "/{id}")
-    public String update(@ModelAttribute("user") User user) {
-        userService.editUser(user);
+    public String update(@PathVariable("id") long id, @ModelAttribute("user") User user) {
+        userService.editUser(id, user);
         return "redirect:/users/admin";
     }
+
     // Удалить пользователя
     @DeleteMapping(value = "/{id}/delete")
     public String delete(@PathVariable("id") long id) {
         userService.removeUserById(id);
         return "redirect:/users/admin";
     }
+
     // Показать данные пользователя
     @GetMapping(value = "/{id}/showUser")
     public String showUser(@PathVariable("id") long id, Model model) {
