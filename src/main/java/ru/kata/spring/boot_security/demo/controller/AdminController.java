@@ -6,12 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
-import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
+
+import java.security.Principal;
 
 @Controller
-@RequestMapping("/users/admin")
+@RequestMapping("/admin")
 public class AdminController {
     private UserService userService;
     private RoleService roleService;
@@ -23,11 +23,13 @@ public class AdminController {
     }
 
     // Показать всех пользователей Из БД
-    @GetMapping
-    public String showAllUsers(Model model) {
+    @GetMapping()
+    public String showAllUsers(Principal principal, Model model) {
+        model.addAttribute("user", new User());
         model.addAttribute("admin", userService.getAllUsers());
         model.addAttribute("roles", roleService.findAll());
-        return "adminPage";
+        model.addAttribute("thisUser", userService.findByUsername(principal.getName()).get());
+        return "admin";
     }
 
     @GetMapping(value = "/{id}/editUser")
@@ -54,7 +56,21 @@ public class AdminController {
     @GetMapping(value = "/{id}/showUser")
     public String showUser(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
-        return "showUser";
+        return "user";
+    }
+    // Созадние нового пользователя
+    @GetMapping(value = "/newUser")
+    public String newUser(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.findAll());
+        return "newUser";
+    }
+
+    // Сохранение нового пользователя
+    @PostMapping()
+    public String save(@ModelAttribute("user") User user) {
+        userService.saveUser(user);
+        return "redirect:/users";
     }
 
 }
