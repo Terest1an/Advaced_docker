@@ -32,45 +32,26 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping(value = "/{id}/editUser")
-    public String editUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("roles", roleService.findAll());
-        return "editUser";
+    // Сохранение нового пользователя
+    @PostMapping()
+    public String save(@ModelAttribute("user") User user) {
+        userService.saveUser(user);
+        return "redirect:/admin";
     }
 
     @PatchMapping(value = "/{id}")
     public String update(@PathVariable("id") long id, @ModelAttribute("user") User user) {
         userService.editUser(id, user);
-        return "redirect:/users/admin";
+        return "redirect:/admin";
     }
+
 
     // Удалить пользователя
-    @DeleteMapping(value = "/{id}/delete")
+    @DeleteMapping(value = "/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.removeUserById(id);
-        return "redirect:/users/admin";
+        return "redirect:/admin";
     }
 
-    // Показать данные пользователя
-    @GetMapping(value = "/{id}/showUser")
-    public String showUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        return "user";
-    }
-    // Созадние нового пользователя
-    @GetMapping(value = "/newUser")
-    public String newUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.findAll());
-        return "newUser";
-    }
-
-    // Сохранение нового пользователя
-    @PostMapping()
-    public String save(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
-        return "redirect:/users";
-    }
 
 }
