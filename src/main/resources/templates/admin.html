@@ -181,7 +181,8 @@
                                                                             id="editRole" multiple="multiple"
                                                                             style="width: 50%">
                                                                         <option th:each="role: ${roles}"
-                                                                                th:value="${role.id}">
+                                                                                th:value="${role.id}"
+                                                                                th:selected="${user.roles.contains(role)}">
                                                                             <th:block th:text="${role.toString()}">
                                                                             </th:block>
                                                                         </option>
@@ -299,7 +300,8 @@
                                                                             disabled=""
                                                                             style="width: 50%">
                                                                         <option th:each="role: ${roles}"
-                                                                                th:value="${role.id}">
+                                                                                th:value="${role.id}"
+                                                                                th:selected="${user.roles.contains(role)}">
                                                                             <th:block th:text="${role.toString()}">
                                                                             </th:block>
                                                                         </option>
@@ -388,11 +390,10 @@
                                             <label for="roles"><b>Roles</b></label>
                                             <select th:name="roles"
                                                     class="form-control justify-content-lg-center align-items-lg-center"
-                                                    id="roles" multiple="" style="width: 400px;">
-                                                <option th:each="role: ${roles}" th:value="${role.id}">
-                                                    <th:block th:text="${role.toString()}">
-                                                    </th:block>
-                                                </option>
+                                                    id="roles" multiple style="width: 400px;">
+                                                <option th:each="role: ${roles}" th:value="${role.id}"
+                                                        th:text="${role.toString()}"></option>
+
                                             </select>
                                         </div>
                                         <div class="col d-flex flex-column align-items-lg-center align-items-xl-center">
