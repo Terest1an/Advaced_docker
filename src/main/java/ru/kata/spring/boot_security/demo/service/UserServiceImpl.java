@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     // Получение пользователя по ID
-    @Transactional
+
     @Override
     public User getUser(long id) {
         return userRepository.findById(id).get();
