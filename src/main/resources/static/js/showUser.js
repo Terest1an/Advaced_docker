@@ -1,7 +1,7 @@
-const url = "/api/user"
+const urlUser = "/api/user"
 
 async function getCurrentUser() {
-    let page = await fetch(url);
+    let page = await fetch(urlUser);
 
     if (page.ok) {
         let user = await page.json();

@@ -32,26 +32,7 @@ public class AdminController {
         return "admin";
     }
 
-    // Сохранение нового пользователя
-    @PostMapping()
-    public String save(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
-        return "redirect:/admin";
-    }
 
-    @PatchMapping(value = "/{id}")
-    public String update(@PathVariable("id") long id, @ModelAttribute("user") User user) {
-        userService.editUser(id, user);
-        return "redirect:/admin";
-    }
-
-
-    // Удалить пользователя
-    @DeleteMapping(value = "/{id}")
-    public String delete(@PathVariable("id") long id) {
-        userService.removeUserById(id);
-        return "redirect:/admin";
-    }
 
 
 }
