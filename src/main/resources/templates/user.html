@@ -13,9 +13,8 @@
     <div class="card text-white bg-dark">
         <div class="d-flex justify-content-between">
             <div class="d-flex align-items-center">
-                <h4 class="mx-auto" id="top-par"
-                    th:text="${user.getUsername()} + ' with roles: ' + ${#strings.arrayJoin(user.roles, ', ')}">ADMIN,
-                    USER
+                <h4 class="mx-auto" id="user-nav-bar">
+
                 </h4>
             </div>
             <div>
@@ -79,7 +78,7 @@
     </div>
 </div>
 
-
+<script th:src="@{/js/navBar.js}"></script>
 <script th:src="@{/js/showUser.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

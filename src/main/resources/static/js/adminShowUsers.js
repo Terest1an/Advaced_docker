@@ -6,6 +6,8 @@ async function adminPage() {
     if (page.ok) {
         let listUsers = await page.json();
         adminDisplayAllUser(listUsers);
+        await getCurrentUser();
+
     } else {
         alert(`Error, ${page.status}`)
     }
@@ -39,6 +41,18 @@ function adminDisplayAllUser(listUsers) {
 
     }
     showAllUsers.innerHTML = HTMLData
+}
+async function getCurrentUser() {
+    const urlUser = "/api/user"
+    let page = await fetch(urlUser);
+
+    if (page.ok) {
+        let user = await page.json();
+        await showUserEmailOnNavbar(user)
+    } else {
+        alert(`Error, ${page.status}`);
+        return null;
+    }
 }
 
 adminPage();

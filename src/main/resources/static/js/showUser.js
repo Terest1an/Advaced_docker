@@ -6,6 +6,7 @@ async function getCurrentUser() {
     if (page.ok) {
         let user = await page.json();
         displayCurrentUser(user);
+        await showUserEmailOnNavbar(user)
     } else {
         alert(`Error, ${page.status}`)
     }

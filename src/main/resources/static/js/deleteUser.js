@@ -1,11 +1,3 @@
-async function deleteUser() {
-    const res = await fetch("/api/admin/delete", {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
-}
 async function fillDeleteUserPage(id) {
     const url = "api/admin/" + id
     let page = await fetch(url);
@@ -13,11 +5,13 @@ async function fillDeleteUserPage(id) {
     if (page.ok) {
         let user = await page.json();
         showDeletedUser(user);
+        userDelete();
     } else {
         alert(`Error, ${page.status}`)
     }
     console.log();
 }
+
 function showDeletedUser(user) {
     const deleteIdInput = document.getElementById('deleteId');
     const deleteFirstNameInput = document.getElementById('deleteFirstName');
@@ -31,8 +25,6 @@ function showDeletedUser(user) {
     deleteAgeInput.value = user.age;
     deleteEmailInput.value = user.username;
     deleteRoleSelect.innerHTML = '';
-
-    // Добавляем опции для ROLE_USER и ROLE_ADMIN
 
     const adminOption = document.createElement('option');
     adminOption.value = 'ROLE_ADMIN';
@@ -55,3 +47,27 @@ function showDeletedUser(user) {
 
 
 }
+
+
+async function userDelete() {
+    const deleteMod = document.getElementById("delete-form")
+    deleteMod.addEventListener("submit", remove)
+
+    function remove(addEvent) {
+        addEvent.preventDefault()
+        const deleteIdInput = document.getElementById('deleteId');
+        let urlDel = "api/admin/" + deleteIdInput.value
+        let method = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        fetch(urlDel, method).then(() => {
+            document.getElementById("deleteClose").click();
+            adminPage()
+        })
+    }
+}
+
+

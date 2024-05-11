@@ -20,6 +20,7 @@ public class RestControll {
     public RestControll(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("/admin/{id}")
     public ResponseEntity<User> getUser(@PathVariable long id) {
         User user = userService.getUser(id);
@@ -51,9 +52,16 @@ public class RestControll {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable long id) {
+        User user = userService.getUser(id);
+        if (user == null) {
+            throw new NoSuchUserException("There is no user in DB with ID: " + id);
+        }
 
-
-
+        userService.removeUserById(id);
+        return ResponseEntity.ok("User with id: " + id + " was deleted.");
+    }
 
 
 }

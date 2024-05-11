@@ -63,7 +63,7 @@ async function saveEditedUser(event) {
     const editEmailInput = document.getElementById('editEmail');
     const editPassword = document.getElementById('editPassword');
     const editRolesSelected = document.getElementById("editRole");
-    const roles = Array.from(editRolesSelected.selectedOptions)
+    const editRoles = Array.from(editRolesSelected.selectedOptions)
         .filter(option => option.selected)
         .map(option => option.value);
 
@@ -74,7 +74,7 @@ async function saveEditedUser(event) {
         age: editAgeInput.value,
         username: editEmailInput.value,
         password: editPassword.value,
-        roles: roles
+        roles: editRoles
     };
     const url = "api/admin/update";
     const options = {
@@ -86,8 +86,8 @@ async function saveEditedUser(event) {
     };
 
     const response = await fetch(url, options).then(() => {
-        adminPage();
         document.getElementById("editClose").click();
+        adminPage();
 
     })
 

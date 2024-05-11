@@ -14,9 +14,8 @@
     <div class="card text-white bg-dark">
         <div class="d-flex justify-content-between">
             <div class="d-flex align-items-center">
-                <h4 class="mx-auto" id="top-par"
-                    th:text="${thisUser.getUsername()} + ' with roles: ' + ${#strings.arrayJoin(thisUser.roles, ', ')}">
-                    ADMIN, USER
+                <h4 class="mx-auto" id="user-nav-bar">
+
                 </h4>
             </div>
             <div>
@@ -145,7 +144,7 @@
                                             </select>
                                         </div>
                                         <div class="col d-flex flex-column align-items-lg-center align-items-xl-center">
-                                            <button type="submit" class="btn btn-success" >Add new user</button>
+                                            <button type="submit" class="btn btn-success">Add new user</button>
                                         </div>
                                     </form>
                                 </div>
@@ -162,7 +161,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
 
-                        <form>
+                        <form id="delete-form">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="DeleteModel">Delete user
                                     User</h4>
@@ -235,9 +234,9 @@
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button"
-                                        data-bs-dismiss="modal">Close
+                                        data-bs-dismiss="modal" id="deleteClose">Close
                                 </button>
-                                <button class="btn btn-danger" type="submit" id="UserDeleteButton">Delete</button>
+                                <button class="btn btn-danger" type="submit" id="userDeleteButton">Delete</button>
                             </div>
 
 
@@ -351,5 +350,6 @@
 <script th:src="@{/js/newUser.js}"></script>
 <script th:src="@{/js/editUser.js}"></script>
 <script th:src="@{/js/deleteUser.js}"></script>
+<script th:src="@{/js/navBar.js}"></script>
 </body>
 </html>
