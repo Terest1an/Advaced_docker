@@ -49,12 +49,13 @@ function showEditedUser(user) {
 
 document.addEventListener('DOMContentLoaded', function () {
     const userEditButton = document.getElementById('userEditButton');
-    userEditButton.addEventListener('click', function () {
-        saveEditedUser();
+    userEditButton.addEventListener('click', function (event) {
+        saveEditedUser(event);
     });
 });
 
-async function saveEditedUser() {
+async function saveEditedUser(event) {
+    event.preventDefault();
     const editIdInput = document.getElementById('editId');
     const editFirstNameInput = document.getElementById('editFirstName');
     const editLastNameInput = document.getElementById('editLastName');
@@ -75,21 +76,19 @@ async function saveEditedUser() {
         password: editPassword.value,
         roles: roles
     };
-    console.log(editedUser)
-
-
     const url = "api/admin/update";
     const options = {
-        method: 'PUT', // Метод запроса
+        method: 'PUT',
         headers: {
-            'Content-Type': 'application/json' // Указываем тип контента как JSON
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(editedUser) // Преобразуем объект editedUser в JSON
+        body: JSON.stringify(editedUser)
     };
 
-    const response = await fetch(url, options); // Отправляем запрос на сервер
+    const response = await fetch(url, options).then(() => {
+        adminPage();
+        document.getElementById("editClose").click();
 
-    if (!response.ok) {
-        alert(`Ошибка при сохранении данных: ${response.status}`);
-    }
+    })
+
 }

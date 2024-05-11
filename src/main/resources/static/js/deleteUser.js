@@ -1,5 +1,5 @@
-async function deleteUser(id) {
-    const res = await fetch("/api/admin/${id}", {
+async function deleteUser() {
+    const res = await fetch("/api/admin/delete", {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

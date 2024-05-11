@@ -35,8 +35,9 @@ async function addNewUserForm() {
         };
         console.log(newUser)
         await createNewUser(newUser);
-        // newUserForm.reset();
-        // document.querySelector('a#all-users').click();
+        newUserForm.reset();
+        document.querySelector('a#all-users').click();
+        await adminPage()
 
     });
 }

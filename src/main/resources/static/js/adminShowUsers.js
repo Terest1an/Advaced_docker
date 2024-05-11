@@ -1,6 +1,6 @@
 const urlAdmin = "/api/admin"
 
-async function adminGetAllUsers() {
+async function adminPage() {
     let page = await fetch(urlAdmin);
 
     if (page.ok) {
@@ -9,18 +9,17 @@ async function adminGetAllUsers() {
     } else {
         alert(`Error, ${page.status}`)
     }
-    console.log();
 }
 
 function adminDisplayAllUser(listUsers) {
     const showAllUsers = document.getElementById('show-all-users');
+    let HTMLData = ""
     for (let user of listUsers) {
         let rolesSting = [];
         for (let role of user.roles) {
             rolesSting.push(" " + role.role.toString().substring(5))
         }
-        showAllUsers.insertAdjacentHTML('beforeend',
-            `<tr>
+        HTMLData += `<tr>
             <td>${user.id}</td>
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
@@ -37,8 +36,9 @@ function adminDisplayAllUser(listUsers) {
             data-bs-target="#deleteModal" id="delete-admin-button" onClick="fillDeleteUserPage(${user.id})">Delete</button>
 </td>
         </tr>`
-        );
+
     }
+    showAllUsers.innerHTML = HTMLData
 }
 
-adminGetAllUsers();
+adminPage();
