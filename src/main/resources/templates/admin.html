@@ -145,7 +145,7 @@
                                             </select>
                                         </div>
                                         <div class="col d-flex flex-column align-items-lg-center align-items-xl-center">
-                                            <button type="submit" class="btn btn-success">Add new user</button>
+                                            <button type="submit" class="btn btn-success" >Add new user</button>
                                         </div>
                                     </form>
                                 </div>
@@ -155,8 +155,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Модальное окно с формой по изменению пользователя-->
-            <div class="modal fade" role="dialog" tabindex="-1" id="editModal"
+            <!-- Модальное окно с формой по удалению пользователя-->
+            <div class="modal fade" role="dialog" id="deleteModal" tabindex="-1"
                  aria-labelledby="edit" aria-hidden="true">
 
                 <div class="modal-dialog" role="document">
@@ -237,7 +237,7 @@
                                 <button class="btn btn-secondary" type="button"
                                         data-bs-dismiss="modal">Close
                                 </button>
-                                <button class="btn btn-danger" type="submit">Delete</button>
+                                <button class="btn btn-danger" type="submit" id="UserDeleteButton">Delete</button>
                             </div>
 
 
@@ -248,7 +248,7 @@
 
             </div>
             <!-- Модальное окно с формой по изменению пользователя-->
-            <div class="modal fade" role="dialog" id="deleteModal" tabindex="-1"
+            <div class="modal fade" role="dialog" tabindex="-1" id="editModal"
                  aria-labelledby="edit" aria-hidden="true">
 
                 <div class="modal-dialog" role="document">
@@ -313,9 +313,8 @@
                                         <select class="form-select justify-content-lg-center align-items-lg-center"
                                                 id="editRole" multiple="multiple"
                                                 style="width: 50%">
-                                            <option>
-                                                ROLE_ADMIN
-                                            </option>
+                                            <option value="ROLE_USER">USER</option>
+                                            <option value="ROLE_ADMIN">ADMIN</option>
                                         </select>
                                     </div>
 
@@ -326,7 +325,7 @@
                                 <button class="btn btn-secondary" type="button"
                                         data-bs-dismiss="modal">Close
                                 </button>
-                                <button class="btn btn-primary" type="submit">Edit</button>
+                                <button class="btn btn-primary" type="submit" id="userEditButton">Edit</button>
                             </div>
 
 
@@ -350,5 +349,7 @@
         crossorigin="anonymous"></script>
 <script th:src="@{/js/adminShowUsers.js}"></script>
 <script th:src="@{/js/newUser.js}"></script>
+<script th:src="@{/js/editUser.js}"></script>
+<script th:src="@{/js/deleteUser.js}"></script>
 </body>
 </html>

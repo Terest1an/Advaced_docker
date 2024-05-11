@@ -15,27 +15,34 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-
+    private RoleService roleService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
+
 
     // Сохранить пользователя
     @Transactional
     @Override
     public void saveUser(User user) {
+        user.setRoles(user.getRoles().stream()
+                .map(role -> roleService.findRoleByRole(role.getRole()))
+                .collect(Collectors.toSet()));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
 
     // Удалить пользователя по ID
     @Transactional
@@ -56,13 +63,18 @@ public class UserServiceImpl implements UserService {
     // Редактирование пользователя
     @Transactional
     @Override
-    public void editUser(Long id, User user) {
-        User existingUser = userRepository.findById(id).get();
-        if (user.getPassword().isEmpty()) {
+    public void editUser(User user) {
+        User existingUser = getUser(user.getId());
+        if (user.getPassword() != null && user.getPassword().isEmpty()) {
             user.setPassword(existingUser.getPassword());
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+
+        user.setRoles(user.getRoles().stream()
+                .map(role -> roleService.findRoleByRole(role.getRole()))
+                .collect(Collectors.toSet()));
+
         userRepository.save(user);
 
     }
@@ -79,8 +91,6 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-
-
 
 
 }

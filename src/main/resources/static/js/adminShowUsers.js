@@ -29,12 +29,12 @@ function adminDisplayAllUser(listUsers) {
             <td>${rolesSting.join(", ")}</td>
             <td>
             <button class="btn btn-info text-white" data-bs-toggle="modal" 
-            data-bs-target="#editModal" id="edit-admin-button"" >Edit</button>
+            data-bs-target="#editModal" id="edit-admin-button" onClick="fillEditedUserPage(${user.id})">Edit</button>
             
 </td>
             <td>
             <button class="btn btn-danger text-white" data-bs-toggle="modal" 
-            data-bs-target="#deleteModal" id="delete-admin-button" >Delete</button>
+            data-bs-target="#deleteModal" id="delete-admin-button" onClick="fillDeleteUserPage(${user.id})">Delete</button>
 </td>
         </tr>`
         );
