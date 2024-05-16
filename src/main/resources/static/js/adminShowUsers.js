@@ -55,4 +55,4 @@ async function getCurrentUser() {
     }
 }
 
-adminPage();
+adminPage()
