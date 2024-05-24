@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.exception.NoSuchUserException;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
@@ -15,10 +17,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class RestControll {
     private UserService userService;
-
+    private final RoleService roleService;
     @Autowired
-    public RestControll(UserService userService) {
+    public RestControll(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/admin/{id}")
@@ -61,6 +64,10 @@ public class RestControll {
 
         userService.removeUserById(id);
         return ResponseEntity.ok("User with id: " + id + " was deleted.");
+    }
+    @GetMapping("/roles")
+    public List<Role> getAllRoles() {
+        return roleService.findAll();
     }
 
 

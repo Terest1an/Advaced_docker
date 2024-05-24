@@ -32,7 +32,7 @@ public class AdminController {
         return "admin";
     }
 
-
+    // localhost:8080/admin
 
 
 }

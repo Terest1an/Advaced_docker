@@ -11,7 +11,7 @@ async function fillEditedUserPage(id) {
     console.log();
 }
 
-function showEditedUser(user) {
+async function showEditedUser(user) {
     const editIdInput = document.getElementById('editId');
     const editFirstNameInput = document.getElementById('editFirstName');
     const editLastNameInput = document.getElementById('editLastName');
@@ -23,28 +23,33 @@ function showEditedUser(user) {
     editLastNameInput.value = user.lastName;
     editAgeInput.value = user.age;
     editEmailInput.value = user.username;
-    editRoleSelect.innerHTML = '';
 
-    // Добавляем опции для ROLE_USER и ROLE_ADMIN
-
-    const adminOption = document.createElement('option');
-    adminOption.value = 'ROLE_ADMIN';
-    adminOption.textContent = 'ADMIN';
-    editRoleSelect.appendChild(adminOption);
-
-    const userOption = document.createElement('option');
-    userOption.value = 'ROLE_USER';
-    userOption.textContent = 'USER';
-    editRoleSelect.appendChild(userOption);
+    await fillRoles(); // Вызываем функцию fillRoles() для заполнения списка ролей
 
     user.roles.forEach(role => {
-        if (role.authority === 'ROLE_USER') {
-            userOption.selected = true;
-        }
-        if (role.authority === 'ROLE_ADMIN') {
-            adminOption.selected = true;
-        }
+        editRoleSelect.querySelectorAll('option').forEach(option => {
+            if (option.value === role.authority) {
+                option.selected = true; // Выбираем текущую роль пользователя
+            }
+        });
     });
+
+}
+async function fillRoles() {
+    const urlRoles = '/api/roles';
+    let page = await fetch(urlRoles)
+        .then(response => response.json())
+        .then(data => {
+            const selectElement = document.getElementById('editRole');
+            selectElement.innerHTML = '';
+            data.forEach(role => {
+                const option = document.createElement('option');
+                option.value = role.role;
+                option.text = role.role.substring(5);
+                selectElement.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 document.addEventListener('DOMContentLoaded', function () {
